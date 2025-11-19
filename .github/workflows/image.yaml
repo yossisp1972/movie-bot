@@ -31,7 +31,9 @@ jobs:
           aws ecr create-repository --repository-name movie-bot-frontend --region us-east-1
 
       - name: Authenticate docker to ecr
-        run: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <account-id>.dkr.ecr.us-east-1.amazonaws.com
+        shell: bash
+        run: |
+          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin <account-id>.dkr.ecr.us-east-1.amazonaws.com
 
       - name: Build backend image
         run: docker build -t movie-bot-backend:latest .
