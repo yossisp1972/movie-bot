@@ -42,13 +42,19 @@ jobs:
           aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 163880612827.dkr.ecr.us-east-1.amazonaws.com
 
       - name: Build backend image
-        run: docker build -t movie-bot-backend:latest .
-            docker tag movie-bot-backend:latest 163880612827.dkr.ecr.us-east-1.amazonaws.com/movie-bot-backend:latest
+        shell: bash
+        run: |
+          docker build -t movie-bot-backend:latest .
+          docker tag movie-bot-backend:latest 163880612827.dkr.ecr.us-east-1.amazonaws.com/movie-bot-backend:latest
         working-directory: ./backend
+
       - name: Build frontend image
-        run: docker build -t movie-bot-frontend:latest .
-             docker tag movie-bot-frontend:latest 163880612827.dkr.ecr.us-east-1.amazonaws.com/movie-bot-frontend:latest
+        shell: bash
+        run: |
+          docker build -t movie-bot-frontend:latest .
+          docker tag movie-bot-frontend:latest 163880612827.dkr.ecr.us-east-1.amazonaws.com/movie-bot-frontend:latest
         working-directory: ./frontend
+
       - name: Push backend image to ECR
         run: docker push 163880612827.dkr.ecr.us-east-1.amazonaws.com/movie-bot-backend:latest
       - name: Push frontend image to ECR
