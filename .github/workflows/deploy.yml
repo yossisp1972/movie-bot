@@ -35,4 +35,4 @@ jobs:
         run: aws eks update-kubeconfig --region us-east-1 --name ${{ steps.export_outputs.outputs.cluster_name }}
 
       - name: Deploy Argo CD Application
-        run: kubectl apply -f ./argocd-app.yaml -n argocd
+        run: kubectl apply -f ./manifests/argocd-app.yaml -n argocd
