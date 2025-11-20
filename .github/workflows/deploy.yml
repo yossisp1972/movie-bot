@@ -24,9 +24,15 @@ jobs:
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_wrapper: false
 
       - name: Terraform Init
         run: terraform init
+        working-directory: ./tf
+
+      - name: Debug - Show all outputs
+        run: terraform output -json
         working-directory: ./tf
       - name: Export Terraform Outputs to GitHub Environment
         id: export_outputs
