@@ -1,4 +1,6 @@
 terraform {
+  backend "local" {}  # Use local backend since we're only reading remote state
+  
   required_providers {
     aws = {
       source  = "hashicorp/aws"
