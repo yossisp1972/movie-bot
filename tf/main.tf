@@ -25,3 +25,7 @@ data "terraform_remote_state" "infra" {
 output "cluster_name" {
   value = data.terraform_remote_state.infra.outputs.cluster_name
 }
+
+output "debug_all_outputs" {
+  value = data.terraform_remote_state.infra.outputs
+}
