@@ -6,7 +6,7 @@ on:
 jobs:
   Build-Infra:
     # Run the Infra Workflow
-    uses: yossisp1972/movie-bot/.github/workflows/deploy.yaml@master
+    uses: yossisp1972/movie-bot/.github/workflows/deploy.yml@master
     secrets:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
