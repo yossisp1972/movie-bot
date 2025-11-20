@@ -1,0 +1,38 @@
+name: Deploy App via Argo CD
+
+on:
+  workflow_call:
+    secrets:
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        required: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Export Terraform Outputs to GitHub Environment
+        id: export_outputs
+        run: |
+          TERRAFORM_OUTPUTS=$(terraform output -json)
+          terraform output -json
+          echo "cluster_name=$(echo $TERRAFORM_OUTPUTS | jq -r '.cluster_name.value')" >> $GITHUB_OUTPUT
+          # echo "my_ip_address=$(echo $TERRAFORM_OUTPUTS | jq -r '.my_ip_address.value')" >> $GITHUB_OUTPUT
+          echo "argocd_server_hostname=$(echo $TERRAFORM_OUTPUTS | jq -r '.argocd_server_hostname.value')" >> $GITHUB_OUTPUT
+        working-directory: yossisp1972/movie-bot/tf
+
+      - name: Update kubeconfig
+        run: aws eks update-kubeconfig --region us-east-1 --name ${{ steps.export_outputs.outputs.cluster_name }}
+
+      - name: Deploy Argo CD Application
+        run: kubectl apply -f ./argocd-app.yaml -n argocd
