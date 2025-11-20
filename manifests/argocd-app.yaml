@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: 'https://github.com/yossisp1972/movie-bot.git'
-    targetRevision: main
+    targetRevision: master
     path: helm
     helm:
       valueFiles:
