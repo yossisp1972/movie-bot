@@ -35,6 +35,7 @@ jobs:
         run: terraform apply -auto-approve
         working-directory: ./tf
 
+
       - name: Debug - Show all outputs
         run: terraform output -json
         working-directory: ./tf
