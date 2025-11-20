@@ -1,4 +1,4 @@
-name: "Caller build image"
+name: "Caller deploy app"
 
 on:
   workflow_dispatch:
