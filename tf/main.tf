@@ -9,6 +9,10 @@ terraform {
   }
 }
 
+provider "aws" {
+  region = "us-east-1"
+}
+
 data "terraform_remote_state" "infra" {
   backend = "s3"
   config = {
