@@ -1,7 +1,7 @@
 name: "Caller build image"
 
 on:
-  workflow_dispatch:
+  push:
 
 jobs:
   Build-Infra:
