@@ -8,4 +8,4 @@ spec:
     app: movie-bot-frontend
   ports:
     - port: {{ .Values.frontend.service.port }}
-      targetPort: 80
+      targetPort: 3000
