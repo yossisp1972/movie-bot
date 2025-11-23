@@ -3,6 +3,7 @@ backend:
     repository: 163880612827.dkr.ecr.us-east-1.amazonaws.com/movie-bot-backend
     tag: latest
   replicaCount: 1
+  serviceName: movie-bot-backend
   service:
     type: ClusterIP
     port: 5000
@@ -12,7 +13,8 @@ frontend:
     repository: 163880612827.dkr.ecr.us-east-1.amazonaws.com/movie-bot-frontend
     tag: latest
   replicaCount: 1
+  serviceName: movie-bot-frontend
   service:
-    type: LoadBalancer
+    type: ClusterIP  # Changed from LoadBalancer - now using Ingress
     port: 80
-    targetPort: 80
+    targetPort: 3000
