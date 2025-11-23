@@ -4,7 +4,7 @@ import os
 
 app = Flask(__name__)
 
-OMDB_API_KEY = os.environ.get('OMDB_API_KEY', 'your_api_key_here')
+OMDB_API_KEY = os.environ.get('OMDB_API_KEY', '20b9a07c')
 OMDB_URL = 'http://www.omdbapi.com/'
 
 @app.route('/api/movie')

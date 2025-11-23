@@ -13,7 +13,7 @@ function App() {
       return;
     }
     try {
-      const res = await fetch(`/api/movie?title=${encodeURIComponent(title)}`);
+      const res = await fetch(`http://movie-bot-backend:5000/api/movie?title=${encodeURIComponent(title)}`);
       const data = await res.json();
       if (data.Response === 'False') {
         setError(data.Error);
