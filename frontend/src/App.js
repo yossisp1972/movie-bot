@@ -9,7 +9,7 @@ function App() {
     setError('');
     setMovie(null);
     if (!title) {
-      setError('Please enter a movie title.');
+      setError('Please enter a  XXX title.');
       return;
     }
     try {
