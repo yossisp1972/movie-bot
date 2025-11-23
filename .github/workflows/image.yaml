@@ -57,6 +57,25 @@ jobs:
 
       - name: Push backend image to ECR
         run: docker push 163880612827.dkr.ecr.us-east-1.amazonaws.com/movie-bot-backend:latest
+      
       - name: Push frontend image to ECR
         run: docker push 163880612827.dkr.ecr.us-east-1.amazonaws.com/movie-bot-frontend:latest
 
+      - name: Get cluster name from Terraform remote state
+        id: get-cluster
+        run: |
+          terraform init
+          terraform apply -auto-approve
+          CLUSTER_NAME=$(terraform output -raw cluster_name)
+          echo "cluster_name=$CLUSTER_NAME" >> $GITHUB_OUTPUT
+        working-directory: ./tf
+
+      - name: Update kubeconfig
+        run: aws eks update-kubeconfig --region us-east-1 --name ${{ steps.get-cluster.outputs.cluster_name }}
+
+      - name: Restart deployments to pull new images
+        run: |
+          kubectl rollout restart deployment/movie-bot-backend -n default
+          kubectl rollout restart deployment/movie-bot-frontend -n default
+          kubectl rollout status deployment/movie-bot-backend -n default
+          kubectl rollout status deployment/movie-bot-frontend -n default
