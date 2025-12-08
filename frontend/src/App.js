@@ -32,7 +32,7 @@ function App() {
         type="text"
         value={title}
         onChange={e => setTitle(e.target.value)}
-        placeholder="Enter movie title"
+        placeholder="Enter movie title please"
       />
       <button onClick={searchMovie}>Search</button>
       {error && <div style={{ color: 'red', marginTop: 10 }}>{error}</div>}
