@@ -27,12 +27,10 @@ jobs:
       - name: create ecr repo
         shell: bash
         run: |
-          repo=$(aws ecr describe-repositories --repository-names movie-bot-backend || echo "not found")
-          if [ -z "$repo" ]; then
+          if ! aws ecr describe-repositories --repository-names movie-bot-backend --region us-east-1 > /dev/null 2>&1; then
             aws ecr create-repository --repository-name movie-bot-backend --region us-east-1
           fi
-          repo=$(aws ecr describe-repositories --repository-names movie-bot-frontend || echo "not found")
-          if [ -z "$repo" ]; then
+          if ! aws ecr describe-repositories --repository-names movie-bot-frontend --region us-east-1 > /dev/null 2>&1; then
             aws ecr create-repository --repository-name movie-bot-frontend --region us-east-1
           fi
 
